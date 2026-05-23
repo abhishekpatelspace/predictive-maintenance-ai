@@ -31,33 +31,33 @@ DROP_COLUMNS = [
 ]
 
 X = df.drop(columns=DROP_COLUMNS)
-+y = df["Failure_Label"]
-+
-+split_index = int(len(df) * 0.8)
-+
-+X_train = X.iloc[:split_index]
-+X_test = X.iloc[split_index:]
-+
-+y_train = y.iloc[:split_index]
-+y_test = y.iloc[split_index:]
-+
-+model = XGBClassifier(
-+    n_estimators=300,
-+    max_depth=6,
-+    learning_rate=0.05,
-+    subsample=0.8,
-+    colsample_bytree=0.8,
-+    objective="binary:logistic",
-+    eval_metric="logloss",
-+    random_state=42
-+)
-+
-+model.fit(X_train, y_train)
-+
-+y_pred = model.predict(X_test)
-+y_prob = model.predict_proba(X_test)[:, 1]
-+
-+print("Accuracy:", accuracy_score(y_test, y_pred))
-+print("ROC AUC:", roc_auc_score(y_test, y_prob))
-+
-+joblib.dump(model, "saved_models/xgb_model.pkl")
+y = df["Failure_Label"]
+
+split_index = int(len(df) * 0.8)
+
+X_train = X.iloc[:split_index]
+X_test = X.iloc[split_index:]
+
+y_train = y.iloc[:split_index]
+y_test = y.iloc[split_index:]
+
+model = XGBClassifier(
+    n_estimators=300,
+    max_depth=6,
+    learning_rate=0.05,
+    subsample=0.8,
+    colsample_bytree=0.8,
+    objective="binary:logistic",
+    eval_metric="logloss",
+    random_state=42
+)
+
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+y_prob = model.predict_proba(X_test)[:, 1]
+
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print("ROC AUC:", roc_auc_score(y_test, y_prob))
+
+joblib.dump(model, "saved_models/xgb_model.pkl")
